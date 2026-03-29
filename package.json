@@ -1,0 +1,55 @@
+{
+  "name": "antigravity-tepyx-bridge",
+  "displayName": "Antigravity Tepyx Bridge",
+  "description": "Official neural bridge for the Tepyx decentralized orchestration marketplace.",
+  "version": "1.0.0",
+  "publisher": "Yvagacore",
+  "author": "Yvagacore Neural Team",
+  "license": "MIT",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "AI",
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "Tepyx",
+    "Yvagacore",
+    "AI Agents",
+    "Neural",
+    "Orchestration",
+    "Antigravity"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "antigravity-tepyx-bridge.resetKey",
+        "title": "Tepyx: Resetear Google Gemini API Key",
+        "category": "Antigravity"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package --allow-missing-repository"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/ws": "^8.18.1",
+    "@vscode/vsce": "^2.31.0",
+    "typescript": "^5.0.0"
+  }
+}
