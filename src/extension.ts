@@ -25,7 +25,6 @@ export function activate(context: vscode.ExtensionContext) {
         verifyClient: (info: { origin: any; }) => {
             const origin = info.origin;
             const allowedOrigins = [
-                'http://localhost:3000',
                 'https://tepyx.yvagacore.com',
             ];
             return allowedOrigins.includes(origin);
