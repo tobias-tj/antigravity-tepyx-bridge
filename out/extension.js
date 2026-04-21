@@ -90,58 +90,55 @@ function activate(context) {
                             }
                         });
                         const prompt = `
-                        You are the SUPREME ARCHITECT of Tepyx (Yvagacore). Your specialty is designing industrial-grade autonomous AI infrastructures, similar to architectures found in n8n or LangGraph.
+                        You are the SUPREME ARCHITECT of Tepyx (Yvagacore). Your specialty is designing industrial-grade autonomous AI infrastructures.
 
                         CURRENT CONTEXT:
                         - WORKSPACE NODES: ${JSON.stringify(request.nodes)}
                         - USER STRATEGIC DIRECTIVES (NOTES): ${request.user_notes.join(" | ")}
 
-                        TASK:
-                        Interpret the USER NOTES to create a professional and functional workflow. 
-
-                        LANGUAGE RULES:
-                        1. DEFAULT: All output content (labels, prompts, payloads) MUST be in ENGLISH.
-                        2. ADAPTABILITY: If the user wrote the "NOTES" in Spanish, you must provide the output content in SPANISH to match their preference.
+                        SYSTEM TOOLSET (Use these for 'actuator' types):
+                        - GMAIL: Use for sending emails, reports, or notifications.
+                        - X_POST: Use for social media automation or public updates.
+                        - PDF: Use for document generation, invoices, or reports.
+                        - WEBHOOK: Use for Webhooks, external API calls, or triggering n8n workflows.
+                        - JS_CODE: Use for complex data transformation, filtering, or custom logic.
+                        - POSTGRES: Use for database operations, such as inserting, updating, deleting, or querying data.
 
                         DESIGN RULES:
-                        1. CREATIVE AUTONOMY: Generate system prompts for 'agents' and content for 'contexts' from scratch. They must be technical, detailed, and task-oriented.
+                        1. CREATIVE AUTONOMY: Generate technical, task-oriented payloads.
                         2. PROFESSIONAL STRUCTURE:
-                        - INPUT: Use 'context' nodes for knowledge bases or input variables.
-                        - PROCESS: Use 'agent' nodes with robust System Prompts (including roles, constraints, and objectives).
-                        - OUTPUT: Use 'actuator' nodes for final actions (e.g., "Send Slack", "Database Injection", "Trigger Webhook").
-                        3. PERSISTENCE: Maintain existing nodes in the workspace, but optimize their edges or positions if necessary for the new flow.
-                        4. EXPORT LOGIC: Design with a real execution engine in mind. Payloads must be clear and actionable.
-
-                        AESTHETICS:
-                        - Organize the flow from LEFT to RIGHT.
-                        - Colors: Agents (#00ffaa), Contexts (#3b82f6), Actuators (#f59e0b), Notes (#a855f7).
+                        - INPUT: Use 'context' nodes for data or variables.
+                        - PROCESS: Use 'agent' nodes for AI logic.
+                        - SYSTEM ACTION: If the user needs to send an email, call an API, or transform data, use the specific 'actuator' labels from the SYSTEM TOOLSET above.
+                        3. N8N OPTIMIZATION: When creating 'actuator' nodes, ensure the 'meta.payload' contains structured instructions that can be easily mapped to a real API or service.
+                        4. PERSISTENCE: Maintain and optimize existing nodes.
+                        5. AESTHETICS: Organize LEFT to RIGHT. 
 
                         OUTPUT STRUCTURE (STRICT RAW JSON):
                         {
-                        "nodes": [
-                            {
-                            "id": "node_unique_id",
-                            "type": "agent|context|actuator|note",
-                            "position": { "x": number, "y": number },
-                            "data": {
-                                "label": "Technical Component Name",
-                                "type": "agent|context|actuator|note",
-                                "meta": { 
-                                "payload": "Detailed system prompt or data content",
-                                "model": "gemini-2.5-flash"
-                                },
-                                "color": "hex"
-                            }
-                            }
-                        ],
-                        "edges": [
-                            { "id": "e_id", "source": "source_id", "target": "target_id", "animated": true }
-                        ],
-                        "ai_comment": "Brief technical explanation of the designed flow."
+                            "nodes": [
+                                {
+                                    "id": "node_unique_id",
+                                    "type": "agent|context|actuator|note",
+                                    "position": { "x": number, "y": number },
+                                    "data": {
+                                        "label": "GMAIL|WEBHOOK|JS_CODE|X_POST|PDF|POSTGRES|Technical Name", 
+                                        "type": "agent|context|actuator|note",
+                                        "meta": { 
+                                            "payload": "Detailed instructions for the actuator or system prompt for agent",
+                                            "model": "gemini-2.5-flash" 
+                                        },
+                                        "color": "hex"
+                                    }
+                                }
+                            ],
+                            "edges": [
+                                { "id": "e_id", "source": "source_id", "target": "target_id", "animated": true }
+                            ],
+                            "ai_comment": "Brief technical explanation."
                         }
 
-                        Return ONLY the raw JSON. Do not add any text before or after the JSON block.
-                        `;
+                        Return ONLY the raw JSON.`;
                         try {
                             const result = await model.generateContent(prompt);
                             const aiResponse = result.response.text();
